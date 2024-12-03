@@ -20,12 +20,11 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 
 <h2>High-Level Steps</h2>
 
-- Step 1
-- Step 2
-- Step 3
-- Step 4
+- Create and configure Azure Virtual Machines (Windows and Linux).
+- Observe ICMP traffic using Wireshark.
+- Configure a Network Security Group to block ICMP traffic and observe changes.
 
-<h2>Actions and Observations</h2>
+<h2>Observing ICMP Traffic Between Virtual Machines with Wireshark</h2>
 
 <b><p>Part 1: Create a Resource Group</p></b>
 
@@ -64,5 +63,21 @@ Next, create a second VM, this time running Ubuntu Server 20.04, which will serv
 - Assign the VM to the same Resource Group (Lab-NSG-Traffic).
 - Select the same Virtual Network and Subnet that was created for the Windows VM. This ensures both VMs can communicate without additional network configuration.
 - Use a Username/Password for authentication, and configure any other required settings.
+
+<h2>Observing ICMP Traffic Between Virtual Machines with Wireshark</h2>
+
+<p>In this section, we’ll analyze ICMP (Internet Control Message Protocol) traffic between two Azure Virtual Machines using Wireshark, a powerful network protocol analyzer. 
+ICMP is often used for diagnostic purposes, such as verifying network connectivity via the ping command. By observing ICMP traffic, we can better understand the communication flow between our VMs and identify the underlying protocols and layers involved in data transmission.</p>
+
+<b><p>Step 1: Connecting to the Windows 10 Virtual Machine</b></p>
+
+![image](https://github.com/user-attachments/assets/f47d115f-a1de-48d0-99e2-b69ee4547fd4)
+
+<p>To begin, connect to the Windows 10 VM. If you’re using a Mac, download and install Microsoft Remote Desktop from the App Store. Once installed:</p>
+
+- Open the Remote Desktop application and input the public IP address of the Windows VM, along with the credentials you created during setup.
+- Establish the connection, and you’ll be presented with the Windows desktop environment inside the VM.
+
+<p>This environment serves as our base for running Wireshark and conducting the traffic analysis.</p>
 
 
