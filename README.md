@@ -165,6 +165,68 @@ Analyze the packet details in Wireshark to understand the flow:
 
 In this section, we will simulate how a firewall works by modifying the Network Security Group (NSG) associated with the Ubuntu VM. This will allow us to control the flow of ICMP traffic (ping requests) and observe the impact of these changes on network communication. By using Wireshark and the command line, we’ll see the effects in real time and develop a deeper understanding of how traffic rules shape connectivity in Azure environments.
 
+<p><b>Step 1: Initiating a Continuous Ping</b></p>
+
+![image](https://github.com/user-attachments/assets/a71ff5a6-f818-43eb-919b-eb455867f13b)
+
+We’ll start by creating a baseline of activity between the Windows and Ubuntu VMs.
+
+- On the Windows 10 VM, open a Command Prompt or PowerShell.
+- Begin a continuous ping to the private IP address of the Ubuntu VM by entering the following command: ping <Ubuntu VM private IP> -t
+- The -t option ensures that the ping runs indefinitely, providing us with a steady stream of ICMP packets to observe.
+- Open Wireshark on the Windows 10 VM and apply a filter for ICMP traffic: Icmp
+- This filter isolates ICMP packets, showing Echo Requests (pings sent by the Windows VM) and Echo Replies (responses from the Ubuntu VM).
+
+At this stage, the continuous ping confirms that ICMP traffic is allowed by the default NSG configuration, and Wireshark visually verifies the steady exchange of requests and replies.
+
+<b><p>Step 2: Blocking ICMP Traffic</b></p>
+
+![image](https://github.com/user-attachments/assets/9cf03f3d-dab1-4529-9bb8-3dcc0c8d4554)
+
+Next, we’ll modify the NSG associated with the Ubuntu VM to block incoming ICMP traffic. This simulates a firewall rule change and provides a hands-on demonstration of its impact.
+
+- Log in to the Azure Portal and locate the Network Security Group (NSG) tied to your Ubuntu VM:
+- Navigate to Networking > Network Settings > [Your Ubuntu VM Name] > Network Security Group.
+- Within the NSG, go to the Inbound Security Rules section and create a new rule to block ICMP traffic:
+- Protocol: Select ICMPv4.
+- Action: Set to Deny.
+- Priority: Choose a low number, such as 100, to ensure this rule takes precedence over others.
+- Save the changes. Azure will immediately begin enforcing the new rule, effectively blocking any incoming ICMP traffic to the Ubuntu VM.
+
+<p><b>Step 3: Observing the Impact of the Rule</b></p>
+
+![image](https://github.com/user-attachments/assets/1ecbc3a2-a888-43f2-bb23-48f7567fe28b)
+
+With the new NSG rule in place, return to the Windows 10 VM to observe the changes.
+
+- Check the output of the ping command:
+- Instead of the usual responses, you will now see Request Timed Out messages. This indicates that while the Windows VM is sending ICMP requests, the Ubuntu VM is no longer allowed to send replies.
+- Open Wireshark and review the captured ICMP traffic:
+- Before the rule was applied, Wireshark displayed a consistent pattern of Echo Requests followed by Echo Replies.
+- Now, you’ll see only Echo Requests with no corresponding replies.
+
+![image](https://github.com/user-attachments/assets/923fabe0-d1c1-4639-aa2e-4d73148434c7)
+
+This exercise highlights how NSG rules can selectively block specific types of traffic while allowing others to flow uninterrupted.
+
+<p><b>Step 4: Restoring ICMP Traffic</b></p>
+
+![image](https://github.com/user-attachments/assets/2fe3188c-2053-484a-9533-9306723923bf)
+
+To demonstrate how quickly NSG changes can be reverted, we’ll re-enable ICMP traffic for the Ubuntu VM.
+
+- Return to the Azure Portal and edit the previously created ICMP rule in the NSG:
+- Change the Action from Deny to Allow and save the changes.
+- Back on the Windows 10 VM, observe the ping command output:
+- The Request Timed Out messages should stop, and replies from the Ubuntu VM will resume.
+- Verify the restored connectivity in Wireshark:
+- Once again, you’ll see the familiar sequence of Echo Requests and Echo Replies, confirming that ICMP traffic is now permitted.
+- Stop the continuous ping by pressing Ctrl + C.
+
+![image](https://github.com/user-attachments/assets/23977f98-ec13-4e99-8623-b26dfc18f53d)
+
+
+
 
 
 
