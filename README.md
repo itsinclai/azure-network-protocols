@@ -80,4 +80,23 @@ ICMP is often used for diagnostic purposes, such as verifying network connectivi
 
 <p>This environment serves as our base for running Wireshark and conducting the traffic analysis.</p>
 
+<b><p>Step 2: Installing Wireshark on the Windows 10 VM</b></p>
+
+![image](https://github.com/user-attachments/assets/232a8c65-ddea-4a65-aa5f-13dc4b4d60b9)
+
+<p>Inside the Windows 10 VM, we need to set up Wireshark to capture and analyze packets:</p>
+
+- Open a web browser and navigate to the official Wireshark website. Download and install the software.
+- Once installed, launch Wireshark. The first screen displays a list of network interfaces. Select the interface associated with your VM’s virtual network.
+
+<p>Wireshark is now ready to begin capturing live network traffic, showing all the data packets sent to and from the VM.</p>
+
+<b><p>Step 3: Starting a Packet Capture</p></b>
+
+Click the Start button in Wireshark to begin capturing network traffic. You’ll immediately see a stream of packets in the main window, each representing a chunk of data traveling across the network. Every packet contains detailed information, including the source and destination addresses, protocols, and data payload.
+
+Initially, this data might seem overwhelming because it includes all types of traffic, such as HTTP, DNS, and ICMP. To focus on specific types of traffic, we’ll use filters.
+
+
+
 
